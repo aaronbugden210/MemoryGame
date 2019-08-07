@@ -10,8 +10,8 @@ imgRandom();
 
 function imgRandom()
 {
-    $("#images").append(row);
     sortArray();
+    $("#images").append(row);
     for (var i = 0; i < imgArr.length; i++) 
     {
         var image = new Image(200, 200);
@@ -20,6 +20,7 @@ function imgRandom()
         $(image).addClass("col-lg-3");
         $(row).append(image);
     }
+    attachListeners();
 }
 
 function sortArray()
@@ -30,23 +31,27 @@ function sortArray()
     });
 }
 
-/////////////////////////
-//create a function that resets the wasClicked value's of each img to 'false'
-//it will be used on the resetGame button click
-/////////////////////////
-
 $("#resetGame").on("click", function()
 {
     $(row).empty();
+    // $("img").detach(); //This also work so I'm keeping it here for now
     console.log("row emptied");
+    imgArr.forEach(function(element)
+    {
+        wasClicked = false;
+        console.log(element.wasClicked);
+    });
     imgRandom();
 });
 
-$("img").on("click", function()
+function attachListeners()
 {
-    this.wasClicked = true;
-    console.log(this.wasClicked);
-});
+    $("img").on("click", function()
+    {
+        this.wasClicked = true;
+        console.log("this images wasClicked value is now " + this.wasClicked);
+    });
+}
 
 //////////////////////////
 //Next objective: create button object, give it on("click") event so that it randomizes the images whenever any button is clicked,
